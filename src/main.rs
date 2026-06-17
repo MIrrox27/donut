@@ -1,20 +1,22 @@
 fn main() {
-    let mut width: usize = 120;
-    let mut height: usize = 30;
+    let width: usize = 120;
+    let height: usize = 30;
 
     let mut screen = vec!['@'; width * height + 1]; // Создаем массив с символами размещенными по всему экрану 
-    screen[width * height] = '\0';
+   
 
     
 
     for i in 0..width{
         for j in 0..height{
-            screen[i + j * width] = '@';
+            let idx = i + j * width;
+            screen[idx] = '@';
 
         }
     }
+    let output: String = screen.iter().collect(); 
 
-    print!(screen[])
+    println!("{}", output);
     /*  Нужно для отрисовки пончика 
     let r1: i32; // Радиус маленькой окружности (внетренность)
     let r2: i32; // Радиус большей окружности 
