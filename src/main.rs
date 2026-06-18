@@ -11,18 +11,17 @@ fn main() {
     let mut screen = vec![' '; width * height]; // Создаем массив с символами размещенными по всему экрану 
     let mut nums: Vec<usize> = vec![0; width * height];
     let aspect = width as f32 / height as f32 * 11.0 / 24.0; // соотношение сторон, для исправления неровностей. 11/24 - соотношение сторон 1 символа. для окна 120х30 примерно равно 1.833
-    let zoom = 0.5; // отдаление объекта от камеры 
+    let r = 0.5; // отдаление круга от камеры (или же квадрат радиуса, круга, который отображается в консоли)
 
     for i in 0..width{
         for j in 0..height{
-            let x: f32 = (i as f32 / width as f32 * 2.0 - 1.0) * aspect;
-            let y: f32 = j as f32 / height as f32 * 2.0 - 1.0;
+            let x: f32 = (i as f32 / width as f32 * 2.0 - 1.0) * aspect; // координата X с нормированием (-1;1)
+            let y: f32 = j as f32 / height as f32 * 2.0 - 1.0; // координата Y с нормированием (-1;1)
 
             let mut pixel = ' ';
             let index = i + j * width;
             
-
-            if (x*x + y*y) < zoom {pixel = '@';}  // рисуем символ 
+            if (x*x + y*y) < r {pixel = '@';}  // рисуем символ 
             screen[index] = pixel;
             nums[index] = index;
 
