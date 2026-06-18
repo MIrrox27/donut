@@ -5,12 +5,12 @@ use std::io::{self, BufRead};
 
 
 fn main() {
-    let width: usize = 120;
-    let height: usize = 30;
+    let width: usize = 120; // ширина экрана
+    let height: usize = 30; // высота экрана
 
     let mut screen = vec![' '; width * height]; // Создаем массив с символами размещенными по всему экрану 
     let mut nums: Vec<usize> = vec![0; width * height];
-    let aspect = height as f32 / height as f32;
+    let aspect = width as f32 / height as f32 * 11.0 / 24.0; // соотношение сторон, для исправления неровностей. 11/24 - соотношение сторон 1 символа.
 
     for i in 0..width{
         for j in 0..height{
