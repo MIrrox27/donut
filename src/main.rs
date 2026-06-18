@@ -28,6 +28,5 @@ fn main() {
     let z = (r2 + r1 * i.cos()) * j.sin();
     */
 
-    let stdin = io::stdin(); // чтобы сразу не закрывалась 
-    let _ = stdin.lock().read_line(&mut String::new());
+    let _ = io::stdin().lock().read_line(&mut String::new()); // чтобы окно сразу не закрывалось 
 }
