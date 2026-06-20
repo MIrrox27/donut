@@ -23,6 +23,7 @@ fn main() {
                 let y: f32 = j as f32 / height as f32 * 2.0 - 1.0; // координата Y с нормированием (-1;1)
 
                 let mut pixel: char = ' ';
+                if pixel == ' ' {} // Заглушка
                 let dist = (x*x + y*y).sqrt();
                 let mut color = (1.0 / dist) as i32;
 
