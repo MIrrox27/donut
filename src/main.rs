@@ -52,7 +52,10 @@ fn main() {
     let _ = io::stdin().lock().read_line(&mut String::new()); // чтобы окно сразу не закрывалось 
 }
 
+fn clamp(value: f32, min: f32, max: f32) -> f32{ // переписал функцию
+    return min.max(value.min(max));
 
+}
 
 fn get_color(x: f32, y: f32) -> i32{
     let dist = (x*x + y*y).sqrt();
@@ -68,10 +71,9 @@ fn get_char(x: f32, y: f32) -> char{
 
     let mut pixel: char = ' ';
     if pixel == ' ' {} // Заглушка
-    let mut color = get_color(x, y);
+    let mut color = get_color(x, y) as f32;
 
-    if color < 0 {color = 0}
-    else if color > gradient_size as i32 {color = gradient_size as i32}
+    color = clamp(color, 0_f32, gradient_size as f32);
     pixel = gradient[color as usize];
     return pixel
 
