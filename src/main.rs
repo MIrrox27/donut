@@ -9,8 +9,14 @@ fn main() {
     let width: usize = 120; // ширина экрана
     let height: usize = 30; // высота экрана
 
+    let center_x = width as f32 / 2_f32;
+    let center_y = height as f32 / 2_f32;
+
+    let scale_x = 30_f32;
+    let scale_y = 15_f32;
+
     let mut screen = vec![' '; width * height]; // Создаем массив с символами размещенными по всему экрану 
-    let z_buffer: f32;
+    let mut z_buffer = vec![0.0, (width * height) as f32];
     let pi = std::f64::consts::PI as f32;
     let pi_2 = std::f64::consts::PI as f32 * 2_f32;
     
@@ -30,6 +36,10 @@ fn main() {
     let mut j: f32 = 0_f32;
 
     let step = 0.07_f32; // шаг для перебора i и j
+    let offset = 5_f32;
+
+
+    
 
 
 
@@ -48,9 +58,28 @@ fn main() {
 
                 let rotate = rotate(a, b, x, y, z);
 
-                x = rotate.0;
-                y = rotate.1;
-                z = rotate.2;
+                let x2 = rotate.0;
+                let y2 = rotate.1;
+                let z2 = rotate.2;
+
+                let d = 1_f32 / (z2 + offset);
+
+                let sx = clamp(center_x + scale_x * d * x2, 0_f32, width as f32) as usize;
+                let sy = clamp(center_y - scale_y * d * y2, 0_f32, height as f32) as usize;
+
+                let pixel = ' ';
+                let index = (i + j * width as f32) as usize;
+
+                if d > z_buffer[index]{
+
+                    z_buffer[index] = d;
+                    screen[index] = pixel;
+                }
+                
+               
+                
+
+                
 
                 j += step;
             }
@@ -71,6 +100,10 @@ fn main() {
 
 
 
+
+
+
+
 fn rotate(a:f32, b:f32, x:f32, y:f32, z:f32) -> (f32, f32, f32){
     let x1 = x;
     let y1 = y * a.cos() - z * a.sin();
@@ -80,8 +113,6 @@ fn rotate(a:f32, b:f32, x:f32, y:f32, z:f32) -> (f32, f32, f32){
     let y2 = x1 * b.sin() + y1 * b.cos();
     let z2 = z1;
     return (x2, y2, z2);
-
-
 }
 
 
@@ -102,8 +133,9 @@ fn y(j: usize, height: usize) -> f32{
 
 fn clamp(value: f32, min: f32, max: f32) -> f32{ // переписал функцию
     return min.max(value.min(max));
-
 }
+
+
 
 fn get_color(x: f32, y: f32) -> i32{
     let dist = (x*x + y*y).sqrt();
