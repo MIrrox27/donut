@@ -69,12 +69,17 @@ fn main() {
 
                     // Поворачиваем нормаль 
                 let nx2 =rotate_normal.0;
-                //let ny2 =rotate_normal.1;
-                //let nz2 =rotate_normal.2;
+                let ny2 =rotate_normal.1;
+                let nz2 =rotate_normal.2;
+
+                let len = (nx2*nx2 + ny2*ny2 + nz2*nz2).sqrt();
+                if len > 0.0 {}
+
+                
 
                     // Яркость 
-                let brightness = clamp(nx2, 0.0, 1.0);
-                let gradient = [' ', '.', ',', '-', '~', ':', ';', ':', '=', '!', '*', '#', '$', '@']; // @%#*+=-:. 
+                let brightness = (ny2 + 1.0) / 2.0;
+                let gradient = [' ', '.', '~', ':', ';', ':', '=', '!', '*', '#', '$', '@']; // @%#*+=-:. 
                 let gradient_size = gradient.len();
                 let idx = (brightness * (gradient_size - 1) as f32).round() as usize;
                 let pixel = gradient[idx];
