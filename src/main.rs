@@ -11,39 +11,49 @@ fn main() {
 
     let mut screen = vec![' '; width * height]; // Создаем массив с символами размещенными по всему экрану 
     let z_buffer: f32;
+    let pi = std::f64::consts::PI as f32;
+    let pi_2 = std::f64::consts::PI as f32 * 2_f32;
     
     //let r = 0.7; // отдаление круга от камеры (или же квадрат радиуса, круга, который отображается в консоли)
 
 
-        // Углы вращения вокруг осей X и Y
+        // Углы вращения вокруг осей X и Z
     let mut a = 0_f32; 
     let mut b = 0_f32; 
 
         // Радиусы
-    let r1: f32; // Радиус маленькой окружности (внетренность)
-    let r2: f32; // Радиус большей окружности 
+    let r1 = 1_f32; // Радиус маленькой окружности 
+    let r2 = 2_f32; // Радиус большей окружности 
 
         // Углы закругления 
-    let i: f32;
-    let j: f32;
+    let mut i: f32 = 0_f32;
+    let mut j: f32 = 0_f32;
 
-        // координаты точек
-    let x = (r2 + r1 * i.cos()) * j.cos();
-    let y = r1 * i.sin();
-    let z = (r2 + r1 * i.cos()) * j.sin();
+    let step = 0.07_f32; // шаг для перебора i и j
 
 
+
+      
     
 
 
-    for t in 1..100000{
+   
+    loop {
+        while  i <= pi_2{
+            while j <= pi_2 {
+                    // координаты точек
+                let mut x = (r2 + r1 * i.cos()) * j.cos();
+                let mut y = r1 * i.sin();
+                let mut z = (r2 + r1 * i.cos()) * j.sin();
 
-        loop {
-            for 
-
-
-
+                j += step;
+            }
+            i += step;
         }
+
+
+
+    
         
         let output: String = screen.iter().collect(); 
         println!("{}", output);
