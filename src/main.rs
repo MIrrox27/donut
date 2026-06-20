@@ -46,6 +46,12 @@ fn main() {
                 let mut y = r1 * i.sin();
                 let mut z = (r2 + r1 * i.cos()) * j.sin();
 
+                let rotate = rotate(a, b, x, y, z);
+
+                x = rotate.0;
+                y = rotate.1;
+                z = rotate.2;
+
                 j += step;
             }
             i += step;
