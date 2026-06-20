@@ -11,9 +11,9 @@ fn main() {
 
     let mut screen = vec![' '; width * height]; // Создаем массив с символами размещенными по всему экрану 
     let aspect = width as f32 / height as f32 * 11.0 / 24.0; // соотношение сторон, для исправления неровностей. 11/24 - соотношение сторон 1 символа. для окна 120х30 примерно равно 1.833
-    let r = 0.7; // отдаление круга от камеры (или же квадрат радиуса, круга, который отображается в консоли)
+    //let r = 0.7; // отдаление круга от камеры (или же квадрат радиуса, круга, который отображается в консоли)
     let gradient = [' ', '.', ':', '-', '=', '+', '*', '!', '%', '@']; // @%#*+=-:. 
-    let gradientSize = gradient.len() - 2;
+    let gradient_size = gradient.len() - 2;
 
 
     for t in 1..100000{
@@ -22,14 +22,13 @@ fn main() {
                 let x: f32 = (i as f32 / width as f32 * 2.0 - 1.0) * aspect + (t as f32 * 0.001).sin(); // координата X с нормированием (-1;1)
                 let y: f32 = j as f32 / height as f32 * 2.0 - 1.0; // координата Y с нормированием (-1;1)
 
-                let mut pixel = ' ';
-                //let index = i + j * width;
+                let mut pixel: char = ' ';
                 let dist = (x*x + y*y).sqrt();
                 let mut color = (1.0 / dist) as i32;
 
                 
                 if color < 0 {color = 0}
-                else if color > gradientSize as i32 {color = gradientSize as i32}
+                else if color > gradient_size as i32 {color = gradient_size as i32}
                 pixel = gradient[color as usize];
                 screen[i + j * width] = pixel;
                 
