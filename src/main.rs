@@ -39,13 +39,6 @@ fn main() {
     let offset = 5_f32;
 
 
-    
-
-
-
-      
-    
-
 
    
     loop {
@@ -68,10 +61,9 @@ fn main() {
                 let sy = clamp(center_y - scale_y * d * y2, 0_f32, height as f32) as usize;
 
                 let pixel = ' ';
-                let index = (i + j * width as f32) as usize;
+                let index = sy * width + sx;
 
                 if d > z_buffer[index]{
-
                     z_buffer[index] = d;
                     screen[index] = pixel;
                 }
