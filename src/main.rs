@@ -12,7 +12,7 @@ fn main() {
     let mut screen = vec![' '; width * height]; // Создаем массив с символами размещенными по всему экрану 
     let mut nums: Vec<usize> = vec![0; width * height];
     let aspect = width as f32 / height as f32 * 11.0 / 24.0; // соотношение сторон, для исправления неровностей. 11/24 - соотношение сторон 1 символа. для окна 120х30 примерно равно 1.833
-    let r = 0.5; // отдаление круга от камеры (или же квадрат радиуса, круга, который отображается в консоли)
+    let r = 0.7; // отдаление круга от камеры (или же квадрат радиуса, круга, который отображается в консоли)
     let gradient = [' ', '.', ':', '-', '=', '+', '*', '!', '%', '@']; // @%#*+=-:. 
     let gradientSize = gradient.len() - 2;
 
@@ -25,11 +25,14 @@ fn main() {
 
                 let mut pixel = ' ';
                 let index = i + j * width;
-                
-                if (x*x + y*y) < r {pixel = '@';}  // рисуем символ 
-                screen[index] = pixel;
-                nums[index] = index;
+                let dist = (x*x + y*y).sqrt();
+                let mut color = (1.0 / dist) as usize;
 
+                
+                if color < 0 {color = 0}
+                else if color > gradientSize {color = gradientSize}
+                pixel = gradient[color];
+                screen[i + j * width] = pixel;
                 
             }
 
