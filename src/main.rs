@@ -1,9 +1,6 @@
 // author https://github.com/MIrrox27/donut
 // main.rs
 
-use std::io::{self, BufRead};
-
-
 
 fn main() {
     let width: usize = 120; // ширина экрана
@@ -16,16 +13,16 @@ fn main() {
     let scale_y = 15_f32;
 
     let mut screen = vec![' '; width * height]; // Создаем массив с символами размещенными по всему экрану 
-    let mut z_buffer = vec![0.0, (width * height) as f32];
-    let pi = std::f64::consts::PI as f32;
+    let mut z_buffer = vec![0.0; width * height];
+    //let pi = std::f64::consts::PI as f32;
     let pi_2 = std::f64::consts::PI as f32 * 2_f32;
     
     //let r = 0.7; // отдаление круга от камеры (или же квадрат радиуса, круга, который отображается в консоли)
 
 
         // Углы вращения вокруг осей X и Z
-    let mut a = 0_f32; 
-    let mut b = 0_f32; 
+    let a = 0_f32; 
+    let b = 0_f32; 
 
         // Радиусы
     let r1 = 1_f32; // Радиус маленькой окружности 
@@ -42,18 +39,41 @@ fn main() {
 
    
     loop {
+            // Обнуляю все списки и углы в начале каждого кадра
+        i = 0.0; j = 0.0; 
+        screen.fill(' ');
+        z_buffer.fill(0.0);
+
         while  i <= pi_2{
             while j <= pi_2 {
+                let is = i.sin();
+                let ic = i.cos();
+
+                let js = j.sin();
+                let jc = j.cos();
+
+
                     // координаты точек
-                let mut x = (r2 + r1 * i.cos()) * j.cos();
-                let mut y = r1 * i.sin();
-                let mut z = (r2 + r1 * i.cos()) * j.sin();
+                let x = (r2 + r1 * ic) * jc;
+                let y = r1 * i.sin();
+                let z = (r2 + r1 * ic) * js;
 
-                let rotate = rotate(a, b, x, y, z);
+                    // Вычисляем нормаль
+                let nx = jc * ic; 
+                let ny = is;
+                let nz = ic * js;
 
-                let x2 = rotate.0;
-                let y2 = rotate.1;
-                let z2 = rotate.2;
+                let rotate_tor = rotate(a, b, x, y, z);
+                let rotate_normal = rotate(a, b, nx, ny, nz);
+
+                    // Поворачиваем нормаль 
+                let nx2 =rotate_normal.0;
+                let ny2 =rotate_normal.1;
+                let nz2 =rotate_normal.2;
+
+                let x2 = rotate_tor.0;
+                let y2 = rotate_tor.1;
+                let z2 = rotate_tor.2;
 
                 let d = 1_f32 / (z2 + offset);
 
@@ -85,14 +105,7 @@ fn main() {
         let output: String = screen.iter().collect(); 
         println!("{}", output);
     }
-
-
-    let _ = io::stdin().lock().read_line(&mut String::new()); // чтобы окно сразу не закрывалось 
 }
-
-
-
-
 
 
 
@@ -133,7 +146,6 @@ fn get_color(x: f32, y: f32) -> i32{
     let dist = (x*x + y*y).sqrt();
     let color = (1.0 / dist) as i32;
     return color;
-
 
 }
 
