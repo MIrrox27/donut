@@ -18,39 +18,37 @@ fn main() {
         // Углы вращения вокруг осей X и Y
     let mut a = 0_f32; 
     let mut b = 0_f32; 
+
+        // Радиусы
+    let r1: f32; // Радиус маленькой окружности (внетренность)
+    let r2: f32; // Радиус большей окружности 
+
+        // Углы закругления 
+    let i: f32;
+    let j: f32;
+
+        // координаты точек
+    let x = (r2 + r1 * i.cos()) * j.cos();
+    let y = r1 * i.sin();
+    let z = (r2 + r1 * i.cos()) * j.sin();
+
+
     
 
 
     for t in 1..100000{
-        for i in 0..width{
-            for j in 0..height{
-                let x: f32 = x(i, width, height) + (t as f32 * 0.001).sin(); // координата X с нормированием (-1;1)
-                let y: f32 = y(j, height); // координата Y с нормированием (-1;1)
 
-                let pixel = get_char(x, y);          
-                screen[i + j * width] = pixel;
-                
-            }
+        loop {
+            for 
+
+
 
         }
+        
         let output: String = screen.iter().collect(); 
         println!("{}", output);
     }
 
-    
-
-
-    /*  Нужно для отрисовки пончика 
-    let r1: i32; // Радиус маленькой окружности (внетренность)
-    let r2: i32; // Радиус большей окружности 
-
-    let i: i32;
-    let j: i32;
-
-    let x = (r2 + r1 * i.cos()) * j.cos();
-    let y = r1 * i.sin();
-    let z = (r2 + r1 * i.cos()) * j.sin();
-    */
 
     let _ = io::stdin().lock().read_line(&mut String::new()); // чтобы окно сразу не закрывалось 
 }
