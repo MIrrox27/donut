@@ -10,7 +10,7 @@ fn main() {
     let height: usize = 30; // высота экрана
 
     let mut screen = vec![' '; width * height]; // Создаем массив с символами размещенными по всему экрану 
-    let aspect = width as f32 / height as f32 * 11.0 / 24.0; // соотношение сторон, для исправления неровностей. 11/24 - соотношение сторон 1 символа. для окна 120х30 примерно равно 1.833
+    
     //let r = 0.7; // отдаление круга от камеры (или же квадрат радиуса, круга, который отображается в консоли)
     
 
@@ -18,7 +18,7 @@ fn main() {
     for t in 1..100000{
         for i in 0..width{
             for j in 0..height{
-                let x: f32 = (i as f32 / width as f32 * 2.0 - 1.0) * aspect + (t as f32 * 0.001).sin(); // координата X с нормированием (-1;1)
+                let x: f32 = x(i, width, height) + (t as f32 * 0.001).sin(); // координата X с нормированием (-1;1)
                 let y: f32 = j as f32 / height as f32 * 2.0 - 1.0; // координата Y с нормированием (-1;1)
 
                 
@@ -51,6 +51,15 @@ fn main() {
 
     let _ = io::stdin().lock().read_line(&mut String::new()); // чтобы окно сразу не закрывалось 
 }
+
+
+fn x(i: usize, width: usize, height: usize) -> f32{
+    let aspect = width as f32 / height as f32 * 11.0 / 24.0; // соотношение сторон, для исправления неровностей. 11/24 - соотношение сторон 1 символа. для окна 120х30 примерно равно 1.833
+    let x: f32 = (i as f32 / width as f32 * 2.0 - 1.0) * aspect;
+    return x;
+}
+
+
 
 fn clamp(value: f32, min: f32, max: f32) -> f32{ // переписал функцию
     return min.max(value.min(max));
