@@ -65,6 +65,20 @@ fn main() {
 
 
 
+fn rotate(a:f32, b:f32, x:f32, y:f32, z:f32) -> (f32, f32, f32){
+    let x1 = x;
+    let y1 = y * a.cos() - z * a.sin();
+    let z1 = y * a.sin() + z * a.cos();
+
+    let x2 = x1 * b.cos() - y1 * b.sin();
+    let y2 = x1 * b.sin() + y1 * b.cos();
+    let z2 = z1;
+    return (x2, y2, z2);
+
+
+}
+
+
 fn x(i: usize, width: usize, height: usize) -> f32{
     let aspect = width as f32 / height as f32 * 11.0 / 24.0; // соотношение сторон, для исправления неровностей. 11/24 - соотношение сторон 1 символа. для окна 120х30 примерно равно 1.833
     let x: f32 = (i as f32 / width as f32 * 2.0 - 1.0) * aspect;
